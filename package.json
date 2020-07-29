@@ -1,7 +1,6 @@
 {
   "name": "repeating-call",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +11,15 @@
     "@akanass/rx-http-request": "^3.3.0",
     "esm": "^3.2.25",
     "rxjs": "^6.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajsaulsberry/retry.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ajsaulsberry/retry/issues"
+  },
+  "homepage": "https://github.com/ajsaulsberry/retry#readme",
+  "description": ""
 }
