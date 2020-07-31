@@ -10,6 +10,7 @@
   "dependencies": {
     "@akanass/rx-http-request": "^3.3.0",
     "esm": "^3.2.25",
+    "ora": "^4.0.5",
     "rxjs": "^6.6.0"
   },
   "repository": {

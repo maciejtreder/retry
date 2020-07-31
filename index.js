@@ -2,10 +2,19 @@ import { RxHR } from '@akanass/rx-http-request';
 import { retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
+
+function wobblyUrl() {
+    var wobbleRate = Math.round(Math.random()) * 10;
+    // Backticks are hard for the blog CMS, so no string interpolation.
+    console.log('wobbleRate = ' + wobbleRate);
+     return (wobbleRate > 5 ? 'http://non-existing-url.com' : 'http://example.com/api');
+} 
+
 async function getAndRetry(url, retryCount) {
-    return RxHR.get(url).pipe(
+    return RxHR.get(
+        url).pipe(
         catchError(error => {
-            console.log('This is just to ensure that call has been repeated');
+            console.log('Tried ' + url + ' got ' + error);
             return throwError(error);
         }),
         retry(retryCount),
@@ -14,9 +23,12 @@ async function getAndRetry(url, retryCount) {
 
 (async () => {
     try {
-        const results = await getAndRetry('http://non-existing.com', 3);
+        const results = await getAndRetry('https://api.mocklets.com/mock68043/', 5);
         console.log(results);
     } catch(error) {
-        console.log('error catched');
+        console.log('The URL fell down!');
     }
 })();
+
+// http://httpstat.us/
+// http://non-existing.com/api
