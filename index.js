@@ -1,5 +1,5 @@
 import { RxHR } from '@akanass/rx-http-request';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 
@@ -13,6 +13,10 @@ function wobblyUrl() {
 async function getAndRetry(url, retryCount) {
     return RxHR.get(
         url).pipe(
+            tap(response => {
+                if (response.response.statusCode >= 400)
+                    throw new Error(`StatusCode: ${response.response.statusCode}`)
+            }),
         catchError(error => {
             console.log('Tried ' + url + ' got ' + error);
             return throwError(error);
@@ -24,7 +28,7 @@ async function getAndRetry(url, retryCount) {
 (async () => {
     try {
         const results = await getAndRetry('https://api.mocklets.com/mock68043/', 5);
-        console.log(results);
+        console.log(results.body);
     } catch(error) {
         console.log('The URL fell down!');
     }
